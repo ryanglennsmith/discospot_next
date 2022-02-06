@@ -1,0 +1,46 @@
+import queryString from "query-string";
+
+export default function handler(req, res) {
+  const code = req.query.code || null;
+  const state = req.query.state || null;
+  // form and form body to "application/x-www-form-urlencoded"-ify the request body
+  const form = {
+    code: code,
+    grant_type: "authorization_code",
+    redirect_uri: "http://localhost:3000/api/spot/callback",
+  };
+  const formBody = Object.keys(form)
+    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(form[key]))
+    .join("&");
+  if (state === null) {
+    res.redirect("/#" + queryString.stringify({ error: "state_mismatch" }));
+  } else {
+    const fetchToken = async () => {
+      const response = await fetch("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: {
+          Authorization:
+            "Basic " +
+            Buffer.from(
+              process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID +
+                ":" +
+                process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET
+            ).toString("base64"),
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formBody,
+      });
+
+      const data = await response.json();
+
+      const url =
+        "/spot/" +
+        queryString.stringify({
+          access_token: data.access_token,
+          refresh_token: data.refresh_token,
+        });
+      res.redirect(url);
+    };
+    fetchToken();
+  }
+}

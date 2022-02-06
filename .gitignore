@@ -32,3 +32,8 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# txt file to ignore
+.ignore_me
+.vscode
+/ignore
