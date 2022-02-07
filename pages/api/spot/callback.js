@@ -44,3 +44,6 @@ export default function handler(req, res) {
     fetchToken();
   }
 }
+
+// error.message === "The access token expired"
+// error.status === 401
