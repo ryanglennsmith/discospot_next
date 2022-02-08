@@ -13,9 +13,7 @@ export default function useURLParams() {
       setAccessToken(
         urlParams.match(/access_token=\w+.+(?=&)/)[0].split("=")[1]
       );
-      setRefreshToken(
-        urlParams.match(/refresh_token=\w+(?=&)/)[0].split("=")[1]
-      );
+      setRefreshToken(urlParams.match(/refresh_token=\w+/)[0].split("=")[1]);
       if (urlParams.includes("seed")) {
         setSeed(urlParams.match(/seed=\w+.+(?=&)/)[0].split("=")[1]);
       }

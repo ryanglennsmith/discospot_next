@@ -4,7 +4,11 @@ import Link from "next/link";
 
 const Query = () => {
   const { accessToken, refreshToken } = useURLParams();
-  const [spotData] = useSpot(accessToken);
+  const [spotData] = useSpot(accessToken, {
+    endpoint: "top50",
+    artistId: null,
+    genre: null,
+  });
 
   if (spotData !== undefined) {
     return (
@@ -14,11 +18,11 @@ const Query = () => {
         {spotData.items.map((artist) => (
           <div className="text-xl" key={artist.id}>
             <Link
-              href={`/spot/recommend/access_token=${accessToken}&refresh_token=${refreshToken}&seed=${artist.name}&`}
+              href={`/spot/recommend/access_token=${accessToken}&refresh_token=${refreshToken}&seed=${artist.id}&genre`}
             >
               <a>{artist.name}</a>
             </Link>{" "}
-            |{" "}
+            | {artist.id} |{" "}
             <ul className="text-sm">
               {artist.genres.map((genre, index) => (
                 <li key={artist.name + genre + index}>{genre}</li>
