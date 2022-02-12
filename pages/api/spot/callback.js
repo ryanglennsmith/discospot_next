@@ -1,4 +1,5 @@
 import queryString from "query-string";
+import cookie from "cookie";
 
 export default function handler(req, res) {
   const code = req.query.code || null;
@@ -32,14 +33,33 @@ export default function handler(req, res) {
       });
 
       const data = await response.json();
-
+      res.setHeader(
+        "Set-Cookie",
+        cookie.serialize("access_token", data.access_token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "development",
+          maxAge: 3600,
+          sameSite: "strict",
+          path: "/",
+        })
+      );
+      // res.setHeader(
+      //   "Set-Cookie",
+      //   cookie.serialize("refresh_token", data.refresh_token, {
+      //     httpOnly: true,
+      //     secure: process.env.NODE_ENV !== "development",
+      //     maxAge: 3600,
+      //     sameSite: "strict",
+      //     path: "/",
+      //   })
+      // );
       const url =
         "/spot/" +
         queryString.stringify({
           access_token: data.access_token,
           refresh_token: data.refresh_token,
         });
-      res.redirect(url);
+      res.redirect("/spot");
     };
     fetchToken();
   }

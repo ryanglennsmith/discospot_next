@@ -5,10 +5,11 @@ export default function useDisco(query) {
   const [url, setUrl] = useState();
 
   useEffect(() => {
+    console.log("disco query is ", query);
     const discoFetch = async () => {
       const url = `https://api.discogs.com/database/search?release_title=${encodeURIComponent(
-        "Enemy of the sun"
-      )}&artist=${encodeURIComponent("neurosis")}&type=master`;
+        query.title
+      )}&artist=${encodeURIComponent(query.artist)}&type=master`;
       const headers = {
         headers: {
           Authorization: `Discogs token=${process.env.NEXT_PUBLIC_DISCO_ACCESS_TOKEN}`,
@@ -17,16 +18,9 @@ export default function useDisco(query) {
       };
       const res = await fetch(url, headers);
       const data = await res.json();
-      console.log(data);
-      setDiscoData(data);
+      setDiscoData(data.results);
     };
     discoFetch();
-  }, []);
+  }, [query]);
   return [discoData];
 }
-
-/* url for a master id : 
-`https://api.discogs.com/database/search?release_title=${encodeURIComponent(
-        "Enemy of the sun"
-      )}&artist=${encodeURIComponent("neurosis")}&type=master`;
-*/
