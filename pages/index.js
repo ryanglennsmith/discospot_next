@@ -2,11 +2,11 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import useDisco from "../hooks/useDisco";
+// import useDisco from "../hooks/useDisco";
 import getSellersList from "../utils/nodescraper";
 
 export default function Home(data) {
-  const [discoData] = useDisco();
+  // const [discoData] = useDisco();
   return (
     <div className={styles.container}>
       <Head>
@@ -28,8 +28,8 @@ export default function Home(data) {
   );
 }
 // find top 50 artitsts in collection
-export async function getServerSideProps() {
-  const data = await getSellersList(11987);
-  console.log(data);
-  return { props: { data: data } };
-}
+// export async function getServerSideProps() {
+//   const data = await getSellersList(11987);
+//   console.log(data);
+//   return { props: { data: data } };
+// }
