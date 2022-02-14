@@ -6,7 +6,7 @@ const sampleQuery = {
   genre: "stoner metal",
 };
 
-export default function useSpot(accessToken, query) {
+export default function useSpot(query) {
   const [spotData, setSpotData] = useState();
   const [url, setUrl] = useState();
 
@@ -27,10 +27,10 @@ export default function useSpot(accessToken, query) {
       setSpotData(data);
     };
 
-    if (accessToken !== undefined) {
-      spotifyFetch();
-    }
-  }, [url, accessToken, query.artistId, query.endpoint]);
+    // if (accessToken !== undefined) {
+    //   spotifyFetch();
+    // }
+  }, [url, query.artistId, query.endpoint]);
 
   return [spotData];
 }

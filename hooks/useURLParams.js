@@ -11,19 +11,15 @@ export default function useURLParams() {
   const router = useRouter();
   const { urlParams } = router.query;
   useEffect(() => {
-    // if (urlParams !== undefined) {
-    //   setAccessToken(
-    //     urlParams.match(/access_token=\w+.+(?=&)/)[0].split("=")[1]
-    //   );
-    // setRefreshToken(urlParams.match(/refresh_token=\w+/)[0].split("=")[1]);
     if (urlParams.includes("seed")) {
-      setSeed(urlParams.match(/seed=\w+.+(?=&)/)[0].split("=")[1]);
+      console.log(urlParams);
+      setSeed(urlParams.match(/seed=\w+.+/)[0].split("=")[1]);
     }
     if (urlParams.includes("artist")) {
       console.log(urlParams);
-      // setArtist(urlParams.match(/artist=\w+.+(?=&)/)[0].split("=")[1]);
-      // setTitle(urlParams.match(/&title=\w+.+/)[0].split("=")[1]);
+      setArtist(urlParams.match(/artist=\w+.+(?=&)/)[0].split("=")[1]);
+      setTitle(urlParams.match(/&title=\w+.+/)[0].split("=")[1]);
     }
   }, [urlParams]);
-  return { accessToken, /*refreshToken,*/ seed, artist, title };
+  return { seed, artist, title };
 }

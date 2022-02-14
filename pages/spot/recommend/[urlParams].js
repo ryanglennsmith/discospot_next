@@ -1,26 +1,33 @@
 import useURLParams from "../../../hooks/useURLParams";
-import useSpot from "../../../hooks/useSpot";
 import RecommendationCard from "../../../components/RecommendationCard";
-import getSellersList from "../../../utils/nodescraper";
-const Recommend = () => {
-  const { accessToken, refreshToken, seed } = useURLParams();
-  const [spotData] = useSpot(accessToken, {
-    endpoint: "recommend",
-    artistId: seed,
-    genre: "nu metal",
-  });
+import { useEffect, useState } from "react";
 
-  if (spotData !== undefined) {
+const Recommend = () => {
+  const { seed } = useURLParams();
+  const [recommendation, setRecommendation] = useState(null);
+  console.log(recommendation);
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      const res = await fetch(`/api/spot/recommendations/${seed}`);
+      const data = await res.json();
+      setRecommendation(data.data);
+      console.log(data.data);
+    };
+    fetchRecommendations();
+  }, [seed]);
+
+  if (recommendation !== null && !recommendation.error) {
     return (
       <div>
         go listen to:{" "}
         <ul>
-          {spotData.tracks.map((track, index) => (
+          {recommendation.tracks.map((track, index) => (
             <li key={track.album.id + index}>
               <RecommendationCard
                 disco={{
                   artist: track.album.artists[0].name,
                   title: track.album.name,
+                  image: track.album.images[0].url,
                 }}
               />
             </li>
@@ -33,8 +40,3 @@ const Recommend = () => {
   }
 };
 export default Recommend;
-export async function getServerSideProps() {
-  const data = await getSellersList(11987);
-  console.log("get sellers data: ", data);
-  return { props: { data: data } };
-}

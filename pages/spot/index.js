@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-const Page = ({ data, accessToken }) => {
+const Page = ({ data }) => {
   return (
     <div>
       logged in
@@ -10,9 +10,7 @@ const Page = ({ data, accessToken }) => {
         {/* make these links and go get recommendations based on that seed */}
         {data.items.map((artist) => (
           <div className="text-xl" key={artist.id}>
-            <Link
-              href={`/spot/recommend/access_token=${accessToken}&seed=${artist.id}&genre`}
-            >
+            <Link href={`/spot/recommend/seed=${artist.id}`}>
               <a>{artist.name}</a>
             </Link>{" "}
             | {artist.id} |{" "}

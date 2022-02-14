@@ -14,7 +14,6 @@ export default function Home(data) {
         <meta name="description" content="discospot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <p>{JSON.stringify(data)}</p>
       <main className={styles.main}>
         <h1 className="text-3xl font-bold underline">discospot</h1>
         <p>
