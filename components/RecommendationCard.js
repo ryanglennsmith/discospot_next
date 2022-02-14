@@ -1,34 +1,24 @@
 import React from "react";
-import useDisco from "../hooks/useDisco";
-import getSellersList from "../utils/nodescraper";
 import Link from "next/link";
+import Image from "next/image";
 
-const RecommendationCard = ({ disco, data }) => {
-  const { artist, title } = disco;
+const RecommendationCard = ({ disco }) => {
+  const { artist, title, image } = disco;
 
-  //   console.log("sellers: ", sellers);
-  //   if (discoData !== undefined && discoData[0] !== undefined) {
-  //     console.log("disco data: ", discoData[0].master_id);
-  //     console.log("data data", data);
   return (
     <div className="w-44 h-60 border border-red-600">
       <Link
-        href={`/spot/recommend/sellers/title=${encodeURIComponent(
-          title
-        )}&artist=${encodeURIComponent(artist)}`}
+        href={`/disco/artist=${encodeURIComponent(
+          artist
+        )}&title=${encodeURIComponent(title)}`}
       >
         <a>
-          {title} | {artist}
+          {title} | {artist} <br />
+          <Image src={image} alt={title} width="176px" height="176px" />
         </a>
       </Link>
     </div>
   );
 };
-//   return <div>loading</div>;
 
 export default RecommendationCard;
-// export async function getServerSideProps() {
-//   const data = await getSellersList(11987);
-//   console.log("get sellers data: ", data);
-//   return { props: { data: data } };
-// }

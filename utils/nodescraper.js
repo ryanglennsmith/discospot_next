@@ -6,7 +6,7 @@ const getSellersList = async (albumMasterID) => {
   const MatchRegEx = /(\d)/g;
   try {
     const res = await superagent.get(
-      `https://www.discogs.com/sell/list?master_id=${albumMasterID}&ev=mb&currency=GBP&format=Vinyl`
+      `https://www.discogs.com/sell/list?master_id=${albumMasterID}&format=Vinyl`
     );
     const matches = res.text.match(SellerRegEx);
     const salesSet = new Set(
