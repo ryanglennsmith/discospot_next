@@ -6,7 +6,7 @@ const RecommendationCard = ({ disco }) => {
   const { artist, title, image } = disco;
 
   return (
-    <div className="w-44 h-60 border border-red-600">
+    <>
       <Link
         href={`/disco/artist=${encodeURIComponent(
           artist
@@ -17,7 +17,7 @@ const RecommendationCard = ({ disco }) => {
           <Image src={image} alt={title} width="176px" height="176px" />
         </a>
       </Link>
-    </div>
+    </>
   );
 };
 

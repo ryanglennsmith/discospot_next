@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 const Recommend = () => {
   const { seed } = useURLParams();
   const [recommendation, setRecommendation] = useState(null);
-  console.log(recommendation);
+
   useEffect(() => {
     const fetchRecommendations = async () => {
       const res = await fetch(`/api/spot/recommendations/${seed}`);
       const data = await res.json();
+
       setRecommendation(data.data);
-      console.log(data.data);
     };
     fetchRecommendations();
   }, [seed]);
@@ -20,9 +20,12 @@ const Recommend = () => {
     return (
       <div>
         go listen to:{" "}
-        <ul>
+        <div className="flex justify-center">
           {recommendation.tracks.map((track, index) => (
-            <li key={track.album.id + index}>
+            <div
+              className="w-44 h-60 border border-red-600 m-2"
+              key={track.album.id + index}
+            >
               <RecommendationCard
                 disco={{
                   artist: track.album.artists[0].name,
@@ -30,9 +33,9 @@ const Recommend = () => {
                   image: track.album.images[0].url,
                 }}
               />
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     );
   } else {

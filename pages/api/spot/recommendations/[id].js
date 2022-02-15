@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   const recommendation = await req.query.id;
   const accessToken = await req.cookies.access_token;
-  const response = await fetch(
+  const spotResponse = await fetch(
     `https://api.spotify.com/v1/recommendations?seed_artists=${encodeURIComponent(
       recommendation
     )}&limit=5`,
@@ -9,6 +9,41 @@ export default async function handler(req, res) {
       headers: { Authorization: `Bearer ${accessToken}` },
     }
   );
-  const data = await response.json();
-  res.json({ data: data });
+  const spotData = await spotResponse.json();
+  const spotPayload = spotData.tracks.map((track) => {
+    return {
+      id: track.album.id,
+      artist: track.album.artists[0].name,
+      title: track.album.name,
+      image: track.album.images[0].url,
+    };
+  });
+
+  const fetchDisco = async (data) => {
+    const promises = data.map(async (item) => {
+      const url = `https://api.discogs.com/database/search?release_title=${encodeURIComponent(
+        item.title
+      )}&artist=${encodeURIComponent(item.artist)}&type=master`;
+      const headers = {
+        headers: {
+          Authorization: `Discogs token=${process.env.NEXT_PUBLIC_DISCO_ACCESS_TOKEN}`,
+          "User-Agent": `"${process.env.NEXT_PUBLIC_DISCO_USER_AGENT}"`,
+        },
+      };
+      const res = await fetch(url, headers);
+      const data = await res.json();
+      return data;
+    });
+    const disco = await Promise.all(promises);
+    return disco;
+  };
+  const discoData = await fetchDisco(spotPayload);
+  const discoPayload = discoData.map((artist) => {
+    return {
+      master_id: artist.results[0].master_id,
+      artist_title: artist.results[0].title,
+    };
+  });
+
+  res.json({ spotData: spotPayload, discoData: discoPayload });
 }
