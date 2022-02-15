@@ -13,24 +13,25 @@ const DiscoSellers = () => {
       setMasterId(data.master_id);
     };
     fetchMasterId();
-  }, [artist, title]);
-  useEffect(() => {
-    const fetchSellers = async () => {
-      const res = await fetch(`/api/disco/sellers/${masterId}`);
-      const data = await res.json();
-      console.log("sellers list: ", data);
-      setSellers(data);
-    };
-    fetchSellers();
-  }, [masterId]);
+  });
+  console.log("master: ", masterId);
+  //   useEffect(() => {
+  //     const fetchSellers = async () => {
+  //       const res = await fetch(`/api/disco/sellers/${masterId}`);
+  //       const data = await res.json();
+  //       console.log("sellers list: ", data);
+  //       setSellers(data);
+  //     };
+  //     fetchSellers();
+  //   }, [masterId]);
   if (sellers !== undefined) {
     return (
       <div>
-        <ul>
+        {/* <ul>
           {sellers.sellers.map((seller) => (
             <li key={seller}>{seller}</li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     );
   }
