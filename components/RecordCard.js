@@ -7,13 +7,12 @@ const RecordCard = ({ disco }) => {
   return (
     <Link href={url} passHref>
       <a target="_blank">
-        <div>
+        <div className="">
           <Image src={thumb} alt={url} width="150px" height="150px" />
           <ul>
             <li>price: {price}</li>
             <li>shipping from: {source}</li>
             <li>shipping cost: {shippingPrice}</li>
-            <li>BUY ME!</li>
             <li>{comments}</li>
           </ul>
         </div>

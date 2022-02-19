@@ -7,13 +7,13 @@ const DiscoSellers = ({ discoData }) => {
   }
   return (
     <div>
-      <p>sellers</p>
+      <p>sellers:</p>
       <div className="flex justify-center flex-wrap">
         {discoData.map((album, index) => {
           return (
             <div
               key={index}
-              className="w-44 h-80 border border-red-600 m-2 p-2 overflow-auto"
+              className="text-xl w-40 h-60 overflow-auto scrollbar-none m-3 shadow-lg shadow-slate-700 text-center text-ellipsis"
             >
               <RecordCard
                 disco={{
