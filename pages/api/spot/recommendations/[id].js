@@ -32,13 +32,21 @@ export default async function handler(req, res) {
       };
       const res = await fetch(url, headers);
       const data = await res.json();
+      console.log("disco_data: ", data);
       return data;
     });
     const disco = await Promise.all(promises);
     return disco;
   };
+
   const discoData = await fetchDisco(spotPayload);
+
   const discoPayload = discoData.map((artist) => {
+    if (artist.results[0] === undefined) {
+      return {
+        master_id: null,
+      };
+    }
     return {
       master_id: artist.results[0].master_id,
       artist_title: artist.results[0].title,
