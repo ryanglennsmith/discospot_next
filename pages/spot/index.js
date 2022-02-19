@@ -33,6 +33,15 @@ export default Page;
 
 export async function getServerSideProps(ctx) {
   const cookies = ctx.req.headers.cookie;
+  if (cookies === undefined) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+      props: {},
+    };
+  }
   const accessToken = cookies.match(/access_token=\w+.+/)[0].split("=")[1];
   const res = await fetch(
     `https://api.spotify.com/v1/me/top/artists?limit=50`,
