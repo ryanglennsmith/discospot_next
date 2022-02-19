@@ -6,9 +6,9 @@ const RecommendationCard = ({ disco }) => {
   const { artist, title, image, masterId } = disco;
   if (masterId === null) {
     return (
-      <div className="">
-        {title} | {artist} <br />
+      <div>
         <Image src={image} alt={title} width="176px" height="176px" />
+        {title} | {artist} <br />
         <br />
         <p className="text-center">sorry no record found</p>
       </div>
@@ -18,8 +18,8 @@ const RecommendationCard = ({ disco }) => {
     <>
       <Link href={`/disco/id=${encodeURIComponent(masterId)}`} passHref>
         <a target="_blank">
-          {title} | {artist} <br />
           <Image src={image} alt={title} width="176px" height="176px" />
+          {title} | {artist} <br />
         </a>
       </Link>
     </>

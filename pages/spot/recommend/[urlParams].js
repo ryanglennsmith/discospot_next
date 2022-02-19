@@ -1,16 +1,16 @@
 import RecommendationCard from "../../../components/RecommendationCard";
 
-const Recommend = ({ spotData, discoData }) => {
+const Recommend = ({ spotData }) => {
   return (
     <div>
-      go listen to:{" "}
+      go buy something like:{" "}
       <div className="flex justify-center">
         {spotData.map((album, index) => {
           {
             if (album.master_id !== null) {
               return (
                 <div
-                  className="w-44 h-80 border border-red-600 m-2 p-2"
+                  className="text-xl w-40 h-40 overflow-auto scrollbar-none m-3 shadow-lg shadow-slate-700 text-center text-ellipsis"
                   key={album.id + index}
                 >
                   <RecommendationCard
@@ -26,7 +26,7 @@ const Recommend = ({ spotData, discoData }) => {
             } else {
               return (
                 <div
-                  className="w-44 h-80 border border-black m-2 opacity-40 hover:opacity-100 p-2"
+                  className="text-xl w-40 h-40 overflow-auto scrollbar-none m-3 shadow-lg opacity-40 hover:opacity-100 p-2"
                   key={album.id + index}
                 >
                   <RecommendationCard
@@ -108,5 +108,5 @@ export async function getServerSideProps(ctx) {
   spotPayload.forEach((spot, index) => {
     spot.master_id = discoPayload[index].master_id;
   });
-  return { props: { spotData: spotPayload, discoData: discoPayload } };
+  return { props: { spotData: spotPayload } };
 }

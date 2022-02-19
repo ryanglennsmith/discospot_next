@@ -2,11 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-// import useDisco from "../hooks/useDisco";
-import getSellersList from "../utils/nodescraper";
 
-export default function Home(data) {
-  // const [discoData] = useDisco();
+export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -18,7 +15,7 @@ export default function Home(data) {
         <h1 className="text-3xl font-bold underline">discospot</h1>
         <p>
           <Link href="/api/spot/login">
-            <a>here</a>
+            <a>start here</a>
           </Link>
           .
         </p>
@@ -26,9 +23,3 @@ export default function Home(data) {
     </div>
   );
 }
-// find top 50 artitsts in collection
-// export async function getServerSideProps() {
-//   const data = await getSellersList(11987);
-//   console.log(data);
-//   return { props: { data: data } };
-// }

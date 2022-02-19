@@ -2,16 +2,16 @@ import { generateRandomString } from "../../../utils/functions";
 import queryString from "query-string";
 
 const scope = [
-  "user-read-private",
-  "user-read-email",
+  // "user-read-private",
+  // "user-read-email",
+
+  // "user-modify-playback-state",
+  // "user-read-playback-position",
+  // "streaming",
+  // "user-read-playback-state",
+  // "user-read-recently-played",
+  // "playlist-read-private",
   "user-library-read",
-  "user-modify-playback-state",
-  "user-read-playback-position",
-  "user-library-read",
-  "streaming",
-  "user-read-playback-state",
-  "user-read-recently-played",
-  "playlist-read-private",
   "user-top-read",
   "user-follow-read",
 ];
