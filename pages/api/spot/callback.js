@@ -8,8 +8,7 @@ export default function handler(req, res) {
   const form = {
     code: code,
     grant_type: "authorization_code",
-    redirect_uri:
-      "https://discospot-next-g6yni7e4v-ryanglennsmith.vercel.app/api/spot/callback",
+    redirect_uri: "https://discospot-next.vercel.app/api/spot/callback",
   };
   const formBody = Object.keys(form)
     .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(form[key]))
