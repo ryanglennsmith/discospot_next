@@ -1,34 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# discospot
 
-## Getting Started
+discospot connects to Spotify's API after authentication and retrieves a user's top artists. From there the user can click on an artist image and get recommendations from the Spotify API based on the artist seed. The app will then find sellers of albums matching those recommendations through a small web scraping utility and the Discogs API.
 
-First, run the development server:
+This version uses Next.js and Tailwind CSS (quite minimally so far).
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+The project remains a work-in-progress.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+It's deployed on [Vercel](https://discospot-next.vercel.app/).
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## project inception and challenges
+This project began as a Christmas break assignment* during a full stack bootcamp. Initially I built it as a Node/Express app serving a Bootstrap frontend. After some exposure to React and then Next.js, I thought that the power of Next to handle the server-side functions would be perfect for the original idea. I switched the CSS framework to Tailwind to try something new.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+*The assignment was simply: "Go Build Something." :hammer_and_wrench:
+I gave some thought to what problem I might like to solve, and I figured that "I don't own enough vinyl" seemed like a good enough place to start. :metal:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## to-dos
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+ - create a real UI
+ - incorporate unit and integration testing
+ - clean up the results from Discogs -- sometimes running up against rate-limiting
