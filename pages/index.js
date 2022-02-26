@@ -7,15 +7,15 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>discospot_next</title>
+        <title>discospot</title>
         <meta name="description" content="discospot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h1 className="text-3xl font-bold underline">discospot</h1>
+        <h1 className="text-3xl font-bold">discospot</h1>
         <p>
           <Link href="/api/spot/login">
-            <a>start here</a>
+            <a>log in here</a>
           </Link>
           .
         </p>

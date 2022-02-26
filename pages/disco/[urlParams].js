@@ -1,35 +1,43 @@
 import React from "react";
 import getSellersList from "../../utils/nodescraper";
 import RecordCard from "../../components/RecordCard";
+import Head from "next/head";
 const DiscoSellers = ({ discoData }) => {
   if (discoData.error !== undefined) {
     return <div>{discoData.error}</div>;
   }
   return (
-    <div>
-      <p>sellers:</p>
-      <div className="flex justify-center flex-wrap">
-        {discoData.map((album, index) => {
-          return (
-            <div
-              key={index}
-              className="text-xl w-40 h-60 overflow-auto scrollbar-none m-3 shadow-lg shadow-slate-700 text-center text-ellipsis"
-            >
-              <RecordCard
-                disco={{
-                  price: album.price,
-                  shippingPrice: album.shipping_price,
-                  source: album.ships_from,
-                  url: album.url,
-                  comments: album.comments,
-                  thumb: album.thumb,
-                }}
-              />
-            </div>
-          );
-        })}
+    <>
+      <Head>
+        <title>discospot</title>
+        <meta name="description" content="discospot" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div>
+        <p>sellers:</p>
+        <div className="flex justify-center flex-wrap">
+          {discoData.map((album, index) => {
+            return (
+              <div
+                key={index}
+                className="text-xl w-40 h-60 overflow-auto scrollbar-none m-3 shadow-lg shadow-slate-700 text-center text-ellipsis"
+              >
+                <RecordCard
+                  disco={{
+                    price: album.price,
+                    shippingPrice: album.shipping_price,
+                    source: album.ships_from,
+                    url: album.url,
+                    comments: album.comments,
+                    thumb: album.thumb,
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -48,8 +56,8 @@ export async function getServerSideProps(ctx) {
       };
       const res = await fetch(url, headers);
       const data = await res.json();
-      const responseHeaders = await res.headers;
-      console.log("response headers:", responseHeaders);
+      // const responseHeaders = await res.headers;
+      // console.log("response headers:", responseHeaders);
       return data;
     });
 

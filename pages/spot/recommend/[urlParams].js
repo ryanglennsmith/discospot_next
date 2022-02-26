@@ -1,49 +1,57 @@
 import RecommendationCard from "../../../components/RecommendationCard";
-
+import Head from "next/head";
 const Recommend = ({ spotData }) => {
   return (
-    <div>
-      go buy something like:{" "}
-      <div className="flex justify-center">
-        {spotData.map((album, index) => {
-          {
-            if (album.master_id !== null) {
-              return (
-                <div
-                  className="text-xl w-40 h-40 overflow-auto scrollbar-none m-3 shadow-lg shadow-slate-700 text-center text-ellipsis"
-                  key={album.id + index}
-                >
-                  <RecommendationCard
-                    disco={{
-                      artist: album.artist,
-                      title: album.title,
-                      image: album.image,
-                      masterId: album.master_id,
-                    }}
-                  />
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  className="text-xl w-40 h-40 overflow-auto scrollbar-none m-3 shadow-lg opacity-40 hover:opacity-100 p-2"
-                  key={album.id + index}
-                >
-                  <RecommendationCard
-                    disco={{
-                      artist: album.artist,
-                      title: album.title,
-                      image: album.image,
-                      masterId: album.master_id,
-                    }}
-                  />
-                </div>
-              );
+    <>
+      {" "}
+      <Head>
+        <title>discospot</title>
+        <meta name="description" content="discospot" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div>
+        go buy something like:{" "}
+        <div className="flex justify-center flex-wrap">
+          {spotData.map((album, index) => {
+            {
+              if (album.master_id !== null) {
+                return (
+                  <div
+                    className="text-xl w-40 h-40 overflow-auto scrollbar-none m-3 shadow-lg shadow-slate-700 text-center text-ellipsis"
+                    key={album.id + index}
+                  >
+                    <RecommendationCard
+                      disco={{
+                        artist: album.artist,
+                        title: album.title,
+                        image: album.image,
+                        masterId: album.master_id,
+                      }}
+                    />
+                  </div>
+                );
+              } else {
+                return (
+                  <div
+                    className="text-xl w-40 h-40 overflow-auto scrollbar-none m-3 shadow-lg opacity-40 hover:opacity-100 p-2"
+                    key={album.id + index}
+                  >
+                    <RecommendationCard
+                      disco={{
+                        artist: album.artist,
+                        title: album.title,
+                        image: album.image,
+                        masterId: album.master_id,
+                      }}
+                    />
+                  </div>
+                );
+              }
             }
-          }
-        })}
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Recommend;
@@ -51,6 +59,7 @@ export async function getServerSideProps(ctx) {
   // get the spotify data
   const seed = ctx.query.urlParams.split("=")[1];
   const cookies = ctx.req.headers.cookie;
+
   if (cookies === undefined) {
     return {
       redirect: {
@@ -90,7 +99,6 @@ export async function getServerSideProps(ctx) {
     };
     const res = await fetch(url, headers);
     const data = await res.json();
-    // console.log("disco_data: ", data);
     return data;
   });
   const discoData = await Promise.all(promises);

@@ -23,7 +23,9 @@ export default function handler(req, res) {
         response_type: "code",
         client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
         scope: scope.join(" "),
-        redirect_uri: 'https://discospot-next.vercel.app/api/spot/callback',
+        redirect_uri:
+          process.env.NEXT_PUBLIC_SPOTIFY_CALLBACK_URL ||
+          "https://discospot-next.vercel.app/api/spot/callback",
         state: state,
       })
   );
