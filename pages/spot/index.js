@@ -50,8 +50,8 @@ const Page = ({ data }) => {
 export default Page;
 
 export async function getServerSideProps(ctx) {
-  const cookies = ctx.req.headers.cookie;
-  if (cookies === undefined) {
+  const cookie = await ctx.req.headers.cookie;
+  if (cookie === undefined) {
     return {
       redirect: {
         destination: "/",
@@ -60,7 +60,7 @@ export async function getServerSideProps(ctx) {
       props: {},
     };
   }
-  const accessToken = cookies.match(/access_token=\w+.+/)[0].split("=")[1];
+  const accessToken = cookie.match(/access_token=\w+.+/)[0].split("=")[1];
   const res = await fetch(
     `https://api.spotify.com/v1/me/top/artists?limit=50`,
     { headers: { Authorization: `Bearer ${accessToken}` } }
