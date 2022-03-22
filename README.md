@@ -6,8 +6,6 @@ This version uses Next.js and Tailwind CSS (quite minimally so far).
 
 The project remains a work-in-progress.
 
-It's deployed on [Vercel](https://discospot-next.vercel.app/).
-
 ## project inception and challenges
 This project began as a Christmas break assignment* during a full stack bootcamp. Initially I built it as a Node/Express app serving a Bootstrap frontend. After some exposure to React and then Next.js, I thought that the power of Next to handle the server-side functions would be perfect for the original idea. I switched the CSS framework to Tailwind to try something new.
 
