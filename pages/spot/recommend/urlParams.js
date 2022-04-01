@@ -60,16 +60,18 @@ export async function getServerSideProps(ctx) {
   const seed = ctx.query.urlParams.split("=")[1];
   const cookies = ctx.req.headers.cookie;
 
-  if (cookies === undefined) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-      props: {},
-    };
-  }
-  const accessToken = cookies.match(/access_token=\w+.+/)[0].split("=")[1];
+  // if (cookies === undefined) {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //     props: {},
+  //   };
+  // }
+  const accessToken = await cookies
+    .match(/access_token=\w+.+/)[0]
+    .split("=")[1];
   const spotRes = await fetch(
     `https://api.spotify.com/v1/recommendations?seed_artists=${encodeURIComponent(
       seed
