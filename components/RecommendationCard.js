@@ -16,12 +16,12 @@ const RecommendationCard = ({ disco }) => {
   }
   return (
     <>
-      <Link href={`/disco/id=${encodeURIComponent(masterId)}`} passHref>
-        <a target="_blank">
-          <Image src={image} alt={title} width="176px" height="176px" />
-          {title} | {artist} <br />
-        </a>
-      </Link>
+      {/* <Link href={`/disco/id=${encodeURIComponent(masterId)}`} passHref>
+        <a target="_blank"> */}
+      <Image src={image} alt={title} width="176px" height="176px" />
+      {title} | {artist} <br />
+      {/* </a>
+      </Link> */}
     </>
   );
 };
