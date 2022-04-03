@@ -1,9 +1,8 @@
 import SpotifyWebApi from "spotify-web-api-node";
-import RecommendationCard from "../../../components/RecommendationCard";
 import Head from "next/head";
-import Link from "next/link";
 import disconnect from "disconnect";
 import getSellersList from "../../../utils/nodescraper";
+import RecordCard from "../../../components/RecordCard";
 
 export async function getServerSideProps(ctx) {
   const urlArray = ctx.query.params.split("=");
@@ -24,7 +23,6 @@ export async function getServerSideProps(ctx) {
     seed_artists: [seed],
     limit: 7,
   });
-  // console.log("sevenTitles: ", sevenTitles.body.tracks);
   const discogsMasterIds = sevenTitles.body.tracks.map(async (track) => {
     try {
       const Discogs = disconnect.Client;
@@ -53,22 +51,11 @@ export async function getServerSideProps(ctx) {
     }
   });
   const masterIds = await Promise.all(discogsMasterIds);
-  // console.log("masterIds: ", masterIds);
   const getSellersMap = masterIds.map(async (id) => {
     try {
       if (id && id.masterId) {
         const list = await getSellersList(id.masterId);
         const getMarket = list.slice(0, 3).map(async (id) => {
-          // const url = `https://api.discogs.com/marketplace/listings/${id}`;
-          // const headers = {
-          //   headers: {
-          //     Authorization: `Discogs token=${process.env.NEXT_PUBLIC_DISCO_ACCESS_TOKEN}`,
-          //     "User-Agent": `"${process.env.NEXT_PUBLIC_DISCO_USER_AGENT}"`,
-          //   },
-          // };
-          // const res = await fetch(url, headers);
-          // const market = await res.json();
-          // return market;
           const Discogs = disconnect.Client;
           const mkt = new Discogs({
             userToken: process.env.NEXT_PUBLIC_DISCO_ACCESS_TOKEN,
@@ -89,7 +76,6 @@ export async function getServerSideProps(ctx) {
           };
         });
         const market = await Promise.all(getMarket);
-        // console.log("market[0]: ", market[0]);
         return { ...id, sellers: list, market: market };
       } else {
         return null;
@@ -100,57 +86,39 @@ export async function getServerSideProps(ctx) {
     }
   });
   const sellers = await Promise.all(getSellersMap);
-  // console.log("sellers: ", sellers);
-  const propsObj = {};
-
   return { props: { data: sellers } };
 }
 const Page = ({ data }) => {
-  console.log("data prop: ", data);
   return (
     <>
       <Head>
         <title>discospot</title>
         <meta name="description" content="discospot" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <ul>
-        {data.map((datum) => {
-          if (!datum || !datum.sellers) {
-            return <></>;
-          } else {
-            return (
-              <li key={datum.masterId}>
-                masterId: {datum.masterId} | artist: {datum.artist} | title:{" "}
-                {datum.title} | <img src={datum.image} alt="thing" />{" "}
-                <ul>
-                  {datum.market.map((seller) => {
-                    return (
-                      <Link href={seller.uri} passHref>
-                        <a>
-                          <li>
-                            seller: {seller.id} + {seller.description} | year:{" "}
-                            {seller.year} | price: {seller.price} | shipping:{" "}
-                            {seller.shipping_price}
-                          </li>
-                        </a>
-                      </Link>
-                    );
-                  })}
-
-                  {datum.sellers.length > 3 && (
-                    <li>
-                      ...and at least {datum.sellers.length - 3} more @
-                      discogs...
-                    </li>
-                  )}
-                </ul>{" "}
-              </li>
-            );
-          }
-        })}
-      </ul>
+      </Head>{" "}
+      <div className="m-auto flex flex-col justify-center align-middle ">
+        <div className="flex m-auto p-1 justify-center w-4/5 flex-wrap ">
+          {data.map((album) => {
+            if (!album || !album.sellers) {
+              return <></>;
+            } else {
+              return (
+                <>
+                  <RecordCard
+                    key={`${album.masterId}cardComp`}
+                    masterId={album.masterId}
+                    artist={album.artist}
+                    title={album.title}
+                    image={album.image}
+                    market={album.market}
+                    sellers={album.sellers}
+                  ></RecordCard>
+                </>
+              );
+            }
+          })}
+        </div>
+      </div>
     </>
   );
 };
